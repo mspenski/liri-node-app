@@ -73,25 +73,6 @@ else if (command === "do-what-it-says") {
             })
     });
 }
-// else if (command === 'do-what-it-says') {
-//     fs.readFile("random.txt", "utf8", function (err, data) {
-//         if (err) {
-//             return console.log(err);
-//         }
-//         var output = data.split(",");
-//         var doItContent = output[1];
-
-//         spotify.search({ type: "track", query: "" + doItContent + "", limit: "1" })
-//             .then(function (response) {
-//                 console.log("Song Name: " + response.tracks.items[0].name);
-//                 console.log("artist:" + response.tracks.items[0].album.artists[0].name);
-//                 console.log("Album link: " + response.tracks.items[0].album.external_urls.spotify);
-//                 console.log("Album: " + response.tracks.items[0].album.name);
-//             }).catch(function (err) {
-//                 console.error("Error Occurred: " + err)
-//             })
-//     });
-// }
 else {
     console.log('invalid command')
 }

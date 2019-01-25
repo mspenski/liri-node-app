@@ -1,4 +1,5 @@
 require("dotenv").config();
+var fs = require("fs")
 
 var keys = require("./keys.js");
 var axios = require("axios")
@@ -21,33 +22,33 @@ var bit = keys.bit.key;
 if (command === 'concert-this') {
     axios.get("https://rest.bandsintown.com/artists/" + content + "/events?app_id=" + bit + "")
         .then(function (response) {
-            console.log("Next concert: " + response.data[0].venue.name);
+            console.log("\nNext concert: " + response.data[0].venue.name);
             console.log("Location: " + response.data[0].venue.city);
-            console.log("Time: " + response.data[0].datetime);
+            console.log("Time: " + response.data[0].datetime + "\n");
         });
 }
 else if (command === 'spotify-this-song') {
     spotify.search({ type: "track", query: "" + content + "", limit: "1" })
         .then(function (response) {
-            console.log("Song Name: " + response.tracks.items[0].name);
+            console.log("\nSong Name: " + response.tracks.items[0].name);
             console.log("artist:" + response.tracks.items[0].album.artists[0].name);
             console.log("Album link: " + response.tracks.items[0].album.external_urls.spotify);
-            console.log("Album: " + response.tracks.items[0].album.name);
+            console.log("Album: " + response.tracks.items[0].album.name + '\n');
         });
 
 }
 else if (command === 'movie-this') {
-    axios.get("http://www.omdbapi.com/?i=tt0485947y=&plot=short&apikey=" + omdb)
+    axios.get("http://www.omdbapi.com/?t=" + content + "&y=&plot=short&apikey=" + omdb)
         .then(function (response) {
-            console.log("Title: " + response.data.Title);
+            console.log("\nTitle: " + response.data.Title);
             console.log("Year: " + response.data.Year);
             console.log("IMDB Rating: " + response.data.Ratings[1].Value);
             console.log("Rotten Tomatoes Rating: " + response.data.Ratings[2].Value);
             console.log("Country: " + response.data.Country);
             console.log("Language: " + response.data.Language);
             console.log("Plot: " + response.data.Plot);
-            console.log("Actors: " + response.data.Actors);
-            JSON.stringify(response);
+            console.log("Actors: " + response.data.Actors + "\n");
+            JSON.stringify(response.data);
         });
     //NEED TO FIGURE OUT HOW TO DEFAULT TO MR NOBODY IF NO INPUT IS ENTERED
 }
@@ -60,13 +61,12 @@ else if (command === "do-what-it-says") {
         var output = data.split(",");
         var doitcontent = output[1];
 
-        spotify
-            .search({ type: "track", query: "" + doitcontent + "", limit: "1" })
+        spotify.search({ type: "track", query: "" + doitcontent + "", limit: "1" })
             .then(function (response) {
-                console.log("Artist: " + response.tracks.items[0].album.artists[0].name);
+                console.log("\nArtist: " + response.tracks.items[0].album.artists[0].name);
                 console.log("Song Name: " + response.tracks.items[0].name);
                 console.log("Album link: " + response.tracks.items[0].album.external_urls.spotify);
-                console.log("Album: " + response.tracks.items[0].album.name);
+                console.log("Album: " + response.tracks.items[0].album.name + "\n");
             })
             .catch(function (err) {
                 console.error("Error occurred: " + err);
